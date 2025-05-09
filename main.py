@@ -1,13 +1,19 @@
-from telegram import Update
+from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 
 BOT_TOKEN = "7765246155:AAFn1u9gPIIrLvmt1ItVrFMS0EmwdjRlve4"
 ADMIN_ID = 1148324126  # Замените на свой Telegram ID
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(
-        "👋 Привет! Отправь сюда свою новость, фото или видео для канала 'Мичуринск Сейчас'. Мы обязательно посмотрим!"
+    form_text = (
+        "👋 Привет! Чтобы отправить новость для канала 'Мичуринск Сейчас', пожалуйста, заполните форму:\n\n"
+        "📌 **Тема:** (например, происшествие, событие, объявление)\n"
+        "✏ **Описание:** (напишите подробности)\n"
+        "📷 **Фото или видео (по желанию):** прикрепите файл\n\n"
+        "После отправки мы проверим ваше сообщение!"
     )
+
+    await update.message.reply_text(form_text, parse_mode='Markdown')
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
